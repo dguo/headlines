@@ -1,10 +1,19 @@
 import urllib2
+from urllib2 import HTTPError, URLError
 import BeautifulSoup
 import shelve
 
+# open a url and return the raw html
 def open_url(url):
-    b = 5
-    print b
+    try:
+        page = urllib2.urlopen(url)
+        html = page.read()
+        return html
+    except HTTPError, e:
+        return 'fail'
+    except URLError, e:
+        print e.reason
+        return 'fail2'
     
 # take in name of source, return dictionary
 def parse_RSS(source):
