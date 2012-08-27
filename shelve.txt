@@ -1,0 +1,4 @@
+source name:
+1) logo source
+2) article title
+3) article picture source or "none" if none
