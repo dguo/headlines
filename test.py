@@ -1,12 +1,16 @@
-import urllib2
-import BeautifulSoup
 import shelve
-from headlines_updater import *
+import feedparser
 
-url = 'http://feeds.nytimes.com/nyt/rss/HomePage'
+urls = {}
+urls['The New York Times'] = 'http://feeds.nytimes.com/nyt/rss/HomePage'
+urls['ESPN'] = 'http://sports.espn.go.com/espn/rss/news'
+                
 
-x = open_url(url)
-
-print x
-
-print 'hello, world'
+url = urls['ESPNd']
+#except KeyError, e:
+ #   url = None
+                
+if url is None:
+    print None
+else:
+    print feedparser.parse(url)
