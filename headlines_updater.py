@@ -4,43 +4,14 @@ import feedparser
 # take in name of the source, return the feed
 def parse_RSS(source):
     urls = {}
-    urls['The New York Times'] = 'http://feeds.nytimes.com/nyt/rss/HomePage'
-    urls['ESPN'] = 'http://sports.espn.go.com/espn/rss/news'
-    urls['The Wall Street Journal'] = 'http://online.wsj.com/xml/rss/3_7011.xml'
-    urls['BBC'] = 'http://feeds.bbci.co.uk/news/rss.xml'
-    urls['ABC News'] = 'http://feeds.abcnews.com/abcnews/topstories'
-    urls['CBS News'] = 'http://feeds.cbsnews.com/CBSNewsMain'
-    urls['CNN'] = 'http://rss.cnn.com/rss/cnn_topstories.rss'
-    urls['Fox News'] = 'http://feeds.foxnews.com/foxnews/latest?format=xml'
-    ursl['Yahoo! News'] = 'http://news.yahoo.com/rss/'
-    urls['Reuters'] = 'http://feeds.reuters.com/reuters/topNews?format=xml'
-    urls['NBC News'] = 'http://pheedo.msnbc.msn.com/id/3032091/device/rss'
-    urls['USA Today'] = 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories'
-    urls['NPR'] = 'http://www.npr.org/rss/rss.php?id=1001'
-    urls['Time'] = 'http://feeds.feedburner.com/time/topstories?format=xml'
     urls['The Daily Mail'] = 'http://www.dailymail.co.uk/home/index.rss'
-    urls['Sports Illustrated'] = 'http://rss.cnn.com/rss/si_topstories.rss'
-    urls['SB Nation'] = 'http://feeds.sbnation.com/rss/current?format=xml'
-    urls['TechCrunch'] = 'http://feeds.feedburner.com/TechCrunch/'
-    urls['Ars Technica'] = 'http://feeds.arstechnica.com/arstechnica/index?format=xml'
-    urls['Wired'] = 'http://feeds.wired.com/wired/index?format=xml'
-    urls['Mashable'] = 'http://feeds.mashable.com/Mashable?format=xml'
     urls['IGN'] = 'http://feeds.ign.com/ign/all?format=xml'
     urls['Gamespot'] = 'http://www.gamespot.com/rss/game_updates.php'
-    urls['CNBC'] = 'http://www.cnbc.com/id/19789731/device/rss/rss.xml'
-    urls['Business Insider'] = 'http://feeds.feedburner.com/businessinsider?format=xml'
-    urls['Forbes'] = 'http://www.forbes.com/real-time/feed/'
-    urls['Rolling Stone'] = 'http://www.rollingstone.com/siteServices/rss/allNews'
-    urls['People'] = 'http://feeds.people.com/people/headlines'
-    urls['TMZ'] = 'http://www.tmz.com/rss.xml'
-    urls['E! Online'] = 'http://feeds.eonline.com/eonline/topstories?format=xml'
     urls['Reddit'] = 'http://www.reddit.com/r/all/top/.rss'
     urls['Buzzfeed'] = 'http://www.buzzfeed.com/index.xml'
     urls['The Huffington Post'] = 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews'
     urls['Politico'] = 'http://feeds.politico.com/politico/rss/politicopicks'
-    urls['NASA Image of the Day'] = 'http://www.nasa.gov/rss/image_of_the_day.rss'
     urls['Cracked'] = 'http://feeds.feedburner.com/CrackedRSS'
-    urls['Dictionary.com Word of the Day'] = 'http://dictionary.reference.com/wordoftheday/wotd.rss'
     
     try:
         url = urls[source]
@@ -54,6 +25,54 @@ def parse_RSS(source):
 
 if __name__ == '__main__':
     
+    general = {}
+    general['ABC News'] = {'RSS': 'http://feeds.abcnews.com/abcnews/topstories', 'items': []}
+    general['BBC'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'items': []}
+    general['CBS News'] = {'RSS': 'http://feeds.cbsnews.com/CBSNewsMain', 'items': []}
+    general['CNN'] = {'RSS': 'http://rss.cnn.com/rss/cnn_topstories.rss', 'items': []}
+    general['Fox News'] = {'RSS': 'http://feeds.foxnews.com/foxnews/latest?format=xml', 'items': []}
+    general['NBC News'] = {'RSS': 'http://pheedo.msnbc.msn.com/id/3032091/device/rss', 'items': []}
+    general['NPR'] = {'RSS': 'http://www.npr.org/rss/rss.php?id=1001', 'items': []}
+    general['Reuters'] = {'RSS': 'http://feeds.reuters.com/reuters/topNews?format=xml', 'items': []}
+    general['The New York Times'] = {'RSS': 'http://feeds.nytimes.com/nyt/rss/HomePage', 'items': []}
+    general['Time'] = {'RSS': 'http://feeds.feedburner.com/time/topstories?format=xml', 'items': []}
+    gneeral['USA Today'] = {'RSS': 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'items': []}
+    general['Yahoo! News'] = {'RSS': 'http://news.yahoo.com/rss/', 'items': []}
+    
+    sports = {}
+    sports['ESPN'] = {'RSS': 'http://sports.espn.go.com/espn/rss/news', 'items': []}
+    sports['SB Nation'] = {'RSS': 'http://feeds.sbnation.com/rss/current?format=xml', 'items': []}
+    sports['Sports Illustrated'] = {'RSS': 'http://rss.cnn.com/rss/si_topstories.rss', 'items': []}
+    
+    technology = {}
+    technology['Ars Technica'] = {'RSS': 'http://feeds.arstechnica.com/arstechnica/index?format=xml', 'items': []}
+    technology['Mashable'] = {'RSS': 'http://feeds.mashable.com/Mashable?format=xml', 'items': []}
+    technology['TechCrunch'] = {'RSS': 'http://feeds.feedburner.com/TechCrunch/', 'items': []}
+    technology['Wired'] = {'RSS': 'http://feeds.wired.com/wired/index?format=xml', 'items': []}
+    
+    business = {}
+    business['Business Insider'] = {'RSS': 'http://feeds.feedburner.com/businessinsider?format=xml', 'items': []}
+    business['CNBC'] = {'RSS': 'http://www.cnbc.com/id/19789731/device/rss/rss.xml', 'items': []}
+    business['Forbes'] = {'RSS': 'http://www.forbes.com/real-time/feed/', 'items': []}
+    business['The Wall Street Journal'] = {'RSS': 'http://online.wsj.com/xml/rss/3_7011.xml', 'items': []}
+    
+    daily = {}
+    daily['NASA Image of the Day'] = {'RSS': 'http://www.nasa.gov/rss/image_of_the_day.rss', 'items': []}
+    daily['Dictionary.com Word of the Day'] = {'RSS': 'http://dictionary.reference.com/wordoftheday/wotd.rss', 'items': []}
+    
+    entertainment = {}
+    entertainment['E! Online'] = {'RSS': 'http://feeds.eonline.com/eonline/topstories?format=xml', 'items': []}
+    entertainment['People'] = {'RSS': 'http://feeds.people.com/people/headlines', 'items': []}
+    entertainment['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'items': []}
+    entertainment['TMZ'] = {'RSS': 'http://www.tmz.com/rss.xml', 'items': = []}
+    
+    
+    
+    
+    
+    sources = [general, sports, technology, business, daily, entertainment] 
+
+
     shelf = shelve.open("articles", writeback=True)
     print(shelf['The New York Times'])
     #shelf['The New York Times'] = {'icon_source': 'test', 'article_source': 'test2'}

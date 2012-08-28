@@ -13,15 +13,11 @@ url = 'http://www.gamespot.com/rss/game_updates.php'
 feed = feedparser.parse(url)
 
 
-i = 0
-for item in feed['items']:
-    if i == 0:
-        for key in item:
-            print key
-        print item['title']
-        print item['link']
-        print item['published']
-        for key in item['summary_detail']:
-            print key
-        print item['summary_detail']['value']
-        i = 2
+
+general_sources = {}
+general_sources['The New York Times'] = {'RSS_link': 'http://feeds.nytimes.com/nyt/rss/HomePage',
+                                         'logo_source': '',
+                                         'item_1': [],
+                                         'item_2': [] }
+
+print general_sources
