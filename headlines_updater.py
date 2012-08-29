@@ -1,30 +1,13 @@
 import shelve
 import feedparser
     
-# take in name of the source, return the feed
+# take in RSS url, return the feed
 def parse_RSS(source):
-    urls = {}
-    urls['The Daily Mail'] = 'http://www.dailymail.co.uk/home/index.rss'
-    urls['IGN'] = 'http://feeds.ign.com/ign/all?format=xml'
-    urls['Gamespot'] = 'http://www.gamespot.com/rss/game_updates.php'
-    urls['Reddit'] = 'http://www.reddit.com/r/all/top/.rss'
-    urls['Buzzfeed'] = 'http://www.buzzfeed.com/index.xml'
-    urls['The Huffington Post'] = 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews'
-    urls['Politico'] = 'http://feeds.politico.com/politico/rss/politicopicks'
-    urls['Cracked'] = 'http://feeds.feedburner.com/CrackedRSS'
-    
-    try:
-        url = urls[source]
-    except KeyError, e:
-        url = None
-    
-    if url is None:
-        return None
-    else:
-        return feedparser.parse(url)
+    return feedparser.parse(source)
 
-if __name__ == '__main__':
+def main():
     
+    # initialize category dictionaries with RSS URLs and empty list of items
     general = {}
     general['ABC News'] = {'RSS': 'http://feeds.abcnews.com/abcnews/topstories', 'items': []}
     general['BBC'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'items': []}
@@ -34,9 +17,10 @@ if __name__ == '__main__':
     general['NBC News'] = {'RSS': 'http://pheedo.msnbc.msn.com/id/3032091/device/rss', 'items': []}
     general['NPR'] = {'RSS': 'http://www.npr.org/rss/rss.php?id=1001', 'items': []}
     general['Reuters'] = {'RSS': 'http://feeds.reuters.com/reuters/topNews?format=xml', 'items': []}
+    general['The Huffington Post'] = {'RSS': 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews', 'items': []}
     general['The New York Times'] = {'RSS': 'http://feeds.nytimes.com/nyt/rss/HomePage', 'items': []}
     general['Time'] = {'RSS': 'http://feeds.feedburner.com/time/topstories?format=xml', 'items': []}
-    gneeral['USA Today'] = {'RSS': 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'items': []}
+    general['USA Today'] = {'RSS': 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'items': []}
     general['Yahoo! News'] = {'RSS': 'http://news.yahoo.com/rss/', 'items': []}
     
     sports = {}
@@ -64,21 +48,49 @@ if __name__ == '__main__':
     entertainment['E! Online'] = {'RSS': 'http://feeds.eonline.com/eonline/topstories?format=xml', 'items': []}
     entertainment['People'] = {'RSS': 'http://feeds.people.com/people/headlines', 'items': []}
     entertainment['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'items': []}
-    entertainment['TMZ'] = {'RSS': 'http://www.tmz.com/rss.xml', 'items': = []}
+    entertainment['TMZ'] = {'RSS': 'http://www.tmz.com/rss.xml', 'items': []}
     
+    politics = {}
+    politics['Politico'] = {'RSS': 'http://feeds.politico.com/politico/rss/politicopicks', 'items': []}
     
+    gaming = {}
+    gaming['Gamespot'] = {'RSS': 'http://www.gamespot.com/rss/game_updates.php', 'items': []}
+    gaming['IGN'] = {'RSS': 'http://feeds.ign.com/ign/all?format=xml', 'items': []}
+
+    random = {}
+    random['Buzzfeed'] = {'RSS': 'http://www.buzzfeed.com/index.xml', 'items': []}
+    random['Cracked'] = {'RSS': 'http://feeds.feedburner.com/CrackedRSS', 'items': []}
+    random['Reddit'] = {'RSS': 'http://www.reddit.com/r/all/top/.rss', 'items': []}
+    random['The Daily Mail'] = {'RSS': 'http://www.dailymail.co.uk/home/index.rss', 'items': []}
     
-    
-    
-    sources = [general, sports, technology, business, daily, entertainment] 
+    # put all categories into a list
+    categories = [general, sports, technology, business, daily, entertainment, politics, gaming, random] 
+
+    # for each news source, return the feed
+    for category in categories:
+        for source in category:
+            feed = parse_RSS(category[source]['RSS'])
+            for i in xrange(5):
+                if i < len(feed.entries):
+                    title = feed.entries[i].title.encode('UTF-8')
+                    link = feed.entries[i].link.encode('UTF-8')
+                    category[source]['items'].append({'title': title, 'link': link})
 
 
-    shelf = shelve.open("articles", writeback=True)
-    print(shelf['The New York Times'])
+
+    print technology['TechCrunch']['items'][3]
+
+    #shelf = shelve.open("articles", writeback=True)
+    #shelf = {}
+    #print(shelf['The New York Times'])
     #shelf['The New York Times'] = {'icon_source': 'test', 'article_source': 'test2'}
     #shelf.sync()
     #print(shelf['The New York Times'])
-    shelf.close()
+    #print shelf
+    #shelf.close()
+    
+if __name__ == '__main__':
+    main()
     
 
 
