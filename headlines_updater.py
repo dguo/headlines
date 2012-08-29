@@ -1,5 +1,6 @@
 import shelve
 import feedparser
+from urllib2 import URLError
     
 # take in RSS url, return the feed
 def parse_RSS(source):
@@ -66,28 +67,29 @@ def main():
     # put all categories into a list
     categories = [general, sports, technology, business, daily, entertainment, politics, gaming, random] 
 
-    # for each news source, return the feed
+    # for each news source, get the feed
     for category in categories:
         for source in category:
             feed = parse_RSS(category[source]['RSS'])
-            for i in xrange(5):
-                if i < len(feed.entries):
-                    title = feed.entries[i].title.encode('UTF-8')
-                    link = feed.entries[i].link.encode('UTF-8')
-                    category[source]['items'].append({'title': title, 'link': link})
-
-
+            if not feed.bozo:
+                # add the five most recent entries for each source
+                for i in xrange(5):
+                    if i < len(feed.entries):
+                        title = feed.entries[i].title.encode('UTF-8')
+                        link = feed.entries[i].link.encode('UTF-8')
+                        category[source]['items'].append({'title': title, 'link': link})
 
     print technology['TechCrunch']['items'][3]
 
-    #shelf = shelve.open("articles", writeback=True)
-    #shelf = {}
+    shelf = shelve.open("items", writeback=True)
+    shelf['categories'] = categories
     #print(shelf['The New York Times'])
     #shelf['The New York Times'] = {'icon_source': 'test', 'article_source': 'test2'}
-    #shelf.sync()
+    print shelf['categories'][2]['TechCrunch']['items'][3]
+    shelf.sync()
     #print(shelf['The New York Times'])
     #print shelf
-    #shelf.close()
+    shelf.close()
     
 if __name__ == '__main__':
     main()
