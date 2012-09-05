@@ -1,10 +1,24 @@
 import shelve
 import feedparser
-from urllib2 import URLError
     
 # take in RSS url, return the feed
 def parse_RSS(source):
     return feedparser.parse(source)
+
+# take in list and sync to shelf
+# if there are any changes besides empty items, make the same change to the shelf
+def sync_shelf(categories):
+    shelf = shelve.open("items", writeback=True)
+    
+    #
+    for category in categories:
+        if category not in shelf:
+            shelf.append(category)
+        else:
+            for source in cateogry:
+                pass
+        
+    shelf.close()
 
 def main():
     
@@ -50,13 +64,11 @@ def main():
     entertainment['People'] = {'RSS': 'http://feeds.people.com/people/headlines', 'items': []}
     entertainment['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'items': []}
     entertainment['TMZ'] = {'RSS': 'http://www.tmz.com/rss.xml', 'items': []}
+    entertainment['Gamespot'] = {'RSS': 'http://www.gamespot.com/rss/game_updates.php', 'items': []}
+    entertainment['IGN'] = {'RSS': 'http://feeds.ign.com/ign/all?format=xml', 'items': []}
     
     politics = {}
     politics['Politico'] = {'RSS': 'http://feeds.politico.com/politico/rss/politicopicks', 'items': []}
-    
-    gaming = {}
-    gaming['Gamespot'] = {'RSS': 'http://www.gamespot.com/rss/game_updates.php', 'items': []}
-    gaming['IGN'] = {'RSS': 'http://feeds.ign.com/ign/all?format=xml', 'items': []}
 
     random = {}
     random['Buzzfeed'] = {'RSS': 'http://www.buzzfeed.com/index.xml', 'items': []}
@@ -65,7 +77,7 @@ def main():
     random['The Daily Mail'] = {'RSS': 'http://www.dailymail.co.uk/home/index.rss', 'items': []}
     
     # put all categories into a list
-    categories = [general, sports, technology, business, daily, entertainment, politics, gaming, random] 
+    categories = [general, sports, technology, business, daily, entertainment, politics, random] 
 
     # for each news source, get the feed
     for category in categories:
@@ -78,22 +90,13 @@ def main():
                         title = feed.entries[i].title.encode('UTF-8')
                         link = feed.entries[i].link.encode('UTF-8')
                         category[source]['items'].append({'title': title, 'link': link})
+                        
+    
+    # sync the list to the shelf
+    sync_shelf(categories)
 
-    print technology['TechCrunch']['items'][3]
-
-    shelf = shelve.open("items", writeback=True)
-    shelf['categories'] = categories
-    #print(shelf['The New York Times'])
-    #shelf['The New York Times'] = {'icon_source': 'test', 'article_source': 'test2'}
     print shelf['categories'][2]['TechCrunch']['items'][3]
     shelf.sync()
-    #print(shelf['The New York Times'])
-    #print shelf
-    shelf.close()
-    
+
 if __name__ == '__main__':
     main()
-    
-
-
-    
