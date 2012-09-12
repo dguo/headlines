@@ -2,6 +2,9 @@ import shelve
 import feedparser
 import requests
 import json
+import urllib2
+from getimageinfo import getImageInfo
+import copy
     
 # take in RSS url, return the feed
 def parse_RSS(source):
@@ -12,36 +15,55 @@ def sync_shelf(sources):
     
     shelf = shelve.open("items", writeback=True)
     
+    # delete any sources in shelf that aren't in sources
+    
+    
     for source in sources:
-        # add any new sources
+        
+        # add any new sources, after running diffbot on every item
         if source not in shelf:
-            shelf[source] = sources[source]
+            for item in sources[source]['items']:
+                item['image_link'] = get_primary_image_link(item['link'])
+            shelf[source] = copy.deepcopy(sources[source])
             shelf.sync()
         
         # only update if there are items to check
         elif sources[source]['items']:
-            # if there is an item missing in the shelf, update all items
+            # if there is an item missing in the shelf, run diffbot, and then update all the source in the shelf
             for item in sources[source]['items']:
-                if item not in shelf[source]['items']:
-                    shelf[source]['items'] = sources[source]['items']
-                    shelf.sync()
-                    break
+                for shelf_item in shelf[source]['items']:
+                    if item['title'] not in shelf[source]['items']:
+                        print item
+                        #item['image_link'] = get_primary_image_link(item['link'])
+                        #shelf[source]['items'] = copy.deepcopy(sources[source]['items'])
+                        #shelf.sync()
         
     shelf.close()
 
 # take in url, return the link for a primary image, if any
 def get_primary_image_link(url):
+    
     api_endpoint = 'http://www.diffbot.com/api/article'
     params = {'token': os.environ['DIFFBOT_TOKEN'], 'format': 'json', 'url': url}
     image_link = ''
+    
     try:
         r = requests.get(api_endpoint, params = params)
         info = json.loads(r.content)
         for content in info['media']:
             if content['primary'] == 'true' and content['type'] == 'image':
-                image_link = content['link']
+                # minimum acceptable image size
+                try:
+                    # 3-tuple of image type, width, and height
+                    picture_info = urllib2.urlopen(content['link']).read()
+                    if getImageInfo(picture_info)[1] > 200 and getImageInfo(picture_info)[2] > 200:
+                        image_link = content['link']
+                        break
+                except:
+                    pass
     except:
         pass
+    
     return image_link
 
 def main():
@@ -67,6 +89,7 @@ def main():
     
     # sports
     category = 'Sports'
+    sources['Bleacher Report'] = {'RSS': 'http://bleacherreport.com/articles/feed', 'items': [], 'category': category}
     sources['ESPN'] = {'RSS': 'http://sports.espn.go.com/espn/rss/news', 'items': [], 'category': category}
     sources['SB Nation'] = {'RSS': 'http://feeds.sbnation.com/rss/current?format=xml', 'items': [], 'category': category}
     sources['Sports Illustrated'] = {'RSS': 'http://rss.cnn.com/rss/si_topstories.rss', 'items': [], 'category': category}
@@ -91,7 +114,7 @@ def main():
     sources['Dictionary.com Word of the Day'] = {'RSS': 'http://dictionary.reference.com/wordoftheday/wotd.rss', 'items': [], 'category': category}
     
     # entertainment
-    category = 'Culture'
+    category = 'Entertainment'
     sources['E! Online'] = {'RSS': 'http://feeds.eonline.com/eonline/topstories?format=xml', 'items': [], 'category': category}
     sources['People'] = {'RSS': 'http://feeds.people.com/people/headlines', 'items': [], 'category': category}
     sources['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'items': [], 'category': category}
@@ -118,9 +141,7 @@ def main():
                 if i < len(feed.entries):
                     title = feed.entries[i].title
                     link = feed.entries[i].link
-                    # use diffbot to store a primary image for the article, if it exists
-                    image_link = get_primary_image_link(link)
-                    sources[source]['items'].append({'title': title, 'link': link, 'image_link': image_link})
+                    sources[source]['items'].append({'title': title, 'link': link, 'image_link': ''})
     
     # sync the list to the shelf
     sync_shelf(sources)
