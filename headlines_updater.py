@@ -29,20 +29,24 @@ def sync_shelf(sources):
         
     shelf.close()
 
-# take in url, 
-def diffbot_to_dict(url):
+# take in url, return the link for a primary image, if any
+def get_primary_image_link(url):
     api_endpoint = 'http://www.diffbot.com/api/article'
     params = {'token': os.environ['DIFFBOT_TOKEN'], 'format': 'json', 'url': url}
+    image_link = ''
     try:
         r = requests.get(api_endpoint, params = params)
         info = json.loads(r.content)
+        for content in info['media']:
+            if content['primary'] == 'true' and content['type'] == 'image':
+                image_link = content['link']
     except:
-        info = {}
-    return info
+        pass
+    return image_link
 
 def main():
     
-    # initialize category dictionaries with RSS URLs and empty list of items
+    # initialize the dictionary of sources with RSS URL, empty list of items, and the source's category
     sources = {}
     
     # general
@@ -112,9 +116,11 @@ def main():
             # add the five most recent entries for each source
             for i in xrange(5):
                 if i < len(feed.entries):
-                    title = feed.entries[i].title.encode('UTF-8')
-                    link = feed.entries[i].link.encode('UTF-8')
-                    sources[source]['items'].append({'title': title, 'link': link})
+                    title = feed.entries[i].title
+                    link = feed.entries[i].link
+                    # use diffbot to store a primary image for the article, if it exists
+                    image_link = get_primary_image_link(link)
+                    sources[source]['items'].append({'title': title, 'link': link, 'image_link': image_link})
     
     # sync the list to the shelf
     sync_shelf(sources)

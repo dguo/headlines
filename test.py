@@ -2,26 +2,35 @@ import shelve
 import feedparser
 import requests
 import json
+import headlines_updater
+import urllib2
 
 
 i = [3,4,6]
 
 print len(i)
 
+shelf = shelve.open("items", writeback=True)
 
-url = 'http://feeds.eonline.com/~r/eonline/topstories/~3/g5xVk4si93I/the-new-normal-save-it-or-sink-it'
+counter = 0
+totalcounter = 0
 
+for content in shelf:
+    for item in shelf[content]['items']:
+        if item['image_link'] != '':
+            print item
+            print ''
+            counter += 1
+        totalcounter += 1
 
-api_endpoint = 'http://www.ddiffbot.com/api/article'
+print counter
+print totalcounter
 
-params = {'token': os.environ['DIFFBOT_TOKEN'], 'format': 'json', 'url': url}
+u = urllib2.urlopen(u'http://www.nytimes.com')
 
+feed = feedparser.parse(u'http://www.rollingstone.com/siteServices/rss/allNews')
 
-try:
-    r = requests.get(api_endpoint, params=params)
-    info = json.loads(r.content)
-
-except:
-   info = {'hi': 'hi'}
-   
-print info
+for i in xrange(5):
+    u = urllib2.urlopen(feed.entries[i].link)
+    print u.read()
+    print feed.entries[i].link
