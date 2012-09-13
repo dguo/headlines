@@ -5,7 +5,7 @@ import json
 import urllib2
 from getimageinfo import getImageInfo
 import copy
-    
+
 # take in RSS url, return the feed
 def parse_RSS(source):
     return feedparser.parse(source)
@@ -15,29 +15,34 @@ def sync_shelf(sources):
     
     shelf = shelve.open("items", writeback=True)
     
-    # delete any sources in shelf that aren't in sources
-    
-    
-    for source in sources:
-        
-        # add any new sources, after running diffbot on every item
-        if source not in shelf:
+    # for new shelf, just copy everything over
+    if len(shelf) == 0:
+        for source in sources:
             for item in sources[source]['items']:
                 item['image_link'] = get_primary_image_link(item['link'])
+        for source in sources:
             shelf[source] = copy.deepcopy(sources[source])
-            shelf.sync()
+        shelf.sync()
         
-        # only update if there are items to check
-        elif sources[source]['items']:
-            # if there is an item missing in the shelf, run diffbot, and then update all the source in the shelf
-            for item in sources[source]['items']:
-                for shelf_item in shelf[source]['items']:
-                    if item['title'] not in shelf[source]['items']:
-                        print item
-                        #item['image_link'] = get_primary_image_link(item['link'])
-                        #shelf[source]['items'] = copy.deepcopy(sources[source]['items'])
-                        #shelf.sync()
+    else:
+        for source in sources:
+            # if there are no items in sources, copy them back from the shelf
+            if len(sources[source]['items']) == 0:
+                sources[source]['items'] = copy.deepcopy(shelf[source]['items'])
+            else:
+                for item in sources[source]['items']:
+                    copied = False
+                    for shelf_item in shelf[source]['items']:
+                        if item['title'] == shelf_item['title']:
+                            copied = True
+                            item['image_link'] = copy.deepcopy(shelf_item['image_link'])
+                    if not copied:
+                        item['image_link'] = get_primary_image_link(item['link'])
         
+        for source in sources:
+            shelf[source] = copy.deepcopy(sources[source])
+        shelf.sync()
+                        
     shelf.close()
 
 # take in url, return the link for a primary image, if any
