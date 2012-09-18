@@ -79,13 +79,14 @@ def main():
     # general
     category = 'General'
     sources['ABC News'] = {'RSS': 'http://feeds.abcnews.com/abcnews/topstories', 'items': [], 'category': category}
-    sources['BBC'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'items': [], 'category': category}
+    sources['BBC News'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'items': [], 'category': category}
     sources['CBS News'] = {'RSS': 'http://feeds.cbsnews.com/CBSNewsMain', 'items': [], 'category': category}
     sources['CNN'] = {'RSS': 'http://rss.cnn.com/rss/cnn_topstories.rss', 'items': [], 'category': category}
     sources['Fox News'] = {'RSS': 'http://feeds.foxnews.com/foxnews/latest?format=xml', 'items': [], 'catgory': category}
     sources['NBC News'] = {'RSS': 'http://pheedo.msnbc.msn.com/id/3032091/device/rss', 'items': [], 'category': category}
     sources['NPR'] = {'RSS': 'http://www.npr.org/rss/rss.php?id=1001', 'items': [], 'category': category}
     sources['Reuters'] = {'RSS': 'http://feeds.reuters.com/reuters/topNews?format=xml', 'items': [], 'category': category}
+    sources['The Daily Mail'] = {'RSS': 'http://www.dailymail.co.uk/home/index.rss', 'items': [], 'category': category}
     sources['The Huffington Post'] = {'RSS': 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews', 'items': [], 'category': category}
     sources['The New York Times'] = {'RSS': 'http://feeds.nytimes.com/nyt/rss/HomePage', 'items': [], 'category': category}
     sources['Time'] = {'RSS': 'http://feeds.feedburner.com/time/topstories?format=xml', 'items': [], 'category': category}
@@ -115,8 +116,8 @@ def main():
     
     # daily
     category = 'Daily'
-    sources['NASA Image of the Day'] = {'RSS': 'http://www.nasa.gov/rss/image_of_the_day.rss', 'items': [], 'catgory': category}
-    sources['Dictionary.com Word of the Day'] = {'RSS': 'http://dictionary.reference.com/wordoftheday/wotd.rss', 'items': [], 'category': category}
+    sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'items': [], 'category': category}
+    sources['NASA Picture of the Day'] = {'RSS': 'http://www.nasa.gov/rss/image_of_the_day.rss', 'items': [], 'catgory': category}
     
     # entertainment
     category = 'Entertainment'
@@ -125,17 +126,26 @@ def main():
     sources['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'items': [], 'category': category}
     sources['TMZ'] = {'RSS': 'http://www.tmz.com/rss.xml', 'items': [], 'category': category}
     sources['Gamespot'] = {'RSS': 'http://www.gamespot.com/rss/game_updates.php', 'items': [], 'category': category}
-    sources['IGN'] = {'RSS': 'http://feeds.ign.com/ign/all?format=xml', 'items': [], 'category': category}
+    sources['IGN'] = {'RSS': 'http://feeds.ign.com/ign/news?format=xml', 'items': [], 'category': category}
     
     # politics
     category = 'Politics'
     sources['Politico'] = {'RSS': 'http://feeds.politico.com/politico/rss/politicopicks', 'items': [], 'category': category}
+    sources['The Drudge Report'] = {'RSS': 'http://feeds.feedburner.com/DrudgeReportFeed', 'items': [], 'category': category}
+    sources['The Washington Post'] = {'RSS': 'http://feeds.washingtonpost.com/rss/politics', 'items': [], 'category': category}
 
     # random
+    category = 'Random'
     sources['Buzzfeed'] = {'RSS': 'http://www.buzzfeed.com/index.xml', 'items': [], 'category': category}
     sources['Cracked'] = {'RSS': 'http://feeds.feedburner.com/CrackedRSS', 'items': [], 'category': category}
     sources['Reddit'] = {'RSS': 'http://www.reddit.com/r/all/top/.rss', 'items': [], 'category': category}
-    sources['The Daily Mail'] = {'RSS': 'http://www.dailymail.co.uk/home/index.rss', 'items': [], 'category': category}
+    
+    # science and health
+    category = 'Science and Health'
+    sources['Discovery'] = {'RSS': 'http://news.discovery.com/rss/news/', 'items': [], 'category': category}
+    sources['HowStuffWorks'] = {'RSS': 'http://www.howstuffworks.com/news-rss.htm', 'items': [], 'category': category}
+    sources['Popular Science'] = {'RSS': 'http://feeds.popsci.com/c/34567/f/632419/index.rss', 'items': [], 'category': category}
+    sources['WebMD'] = {'RSS': 'http://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC', 'items': [], 'category': category}    
 
     # for each news source, get the feed
     for source in sources:
