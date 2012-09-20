@@ -3,15 +3,15 @@ function generate_units()
 
 var sources = []
 
-sources[0] = ['The New York Times', 'general', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[0] = ['NASA Picture of the Day', 'general', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
-sources[1] = ['Cracked', 'business', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[1] = ['Cracked', 'business', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
-sources[2] = ['Discovery', 'science-and-health', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[2] = ['Discovery', 'science-and-health', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
-sources[3] = ['Amazon', 'daily', 'Lorem Ipsum', 'http://www.google.com']
+sources[3] = ['Amazon', 'daily', 'http://www.google.com']
 
-sources[4] = ['Wired', 'technology', 'Lorem Ipsum', 'http://www.google.com']
+sources[4] = ['Wired', 'technology', 'http://www.wired.com']
 
 sources.sort(function() {return 0.5 - Math.random()} )
 
@@ -50,7 +50,10 @@ for (i = 0; i < number_of_rows; i++) {
             var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";
             var source_logo_location = "logos/" + source_logo_name;
             var logo_tag = '<img src="' + source_logo_location + '" alt="' + sources[index][0] + '" style="padding:5px;"/>';
-            unit_top.innerHTML = logo_tag + '<br>' + sources[index][0];
+            
+            var name_tag = '<a href="' + sources[index][2] + '">' + sources[index][0] + '</a>';
+            
+            unit_top.innerHTML = logo_tag + '<br>' + name_tag;
             
             unit_bottom.innerHTML = sources[index][5];
             
