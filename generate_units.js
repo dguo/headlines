@@ -1,20 +1,19 @@
 function generate_units()
 {
-    
-    
-//alert('I came from an external script! Ha, Ha, Ha!!!!');
 
 var sources = []
 
 sources[0] = ['The New York Times', 'general', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
-sources[1] = ['Bloomberg', 'general', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[1] = ['Cracked', 'business', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
-sources[2] = ['Discover', 'general', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[2] = ['Discovery', 'science-and-health', 'Lorem Ipsum', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+
+sources[3] = ['Amazon', 'daily', 'Lorem Ipsum', 'http://www.google.com']
+
+sources[4] = ['Wired', 'technology', 'Lorem Ipsum', 'http://www.google.com']
 
 sources.sort(function() {return 0.5 - Math.random()} )
-
-alert(sources)
 
 var number_of_rows = Math.ceil(sources.length / 4)
 
@@ -42,16 +41,44 @@ for (i = 0; i < number_of_rows; i++) {
     for (j = 0; j < 4; j++) {
         var index = (i * 4) + j;
         if (index < sources.length) {
+            
             var unit_top = document.createElement("div");
             unit_top.className = sources[index][1] + "-top";
             var unit_bottom = document.createElement("div");
             unit_bottom.className = sources[index][1] + "-bottom";
+            
+            var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";
+            var source_logo_location = "logos/" + source_logo_name;
+            var logo_tag = '<img src="' + source_logo_location + '" alt="' + sources[index][0] + '" style="padding:5px;"/>';
+            unit_top.innerHTML = logo_tag + '<br>' + sources[index][0];
+            
+            unit_bottom.innerHTML = sources[index][5];
+            
+            if (j == 0) {
+                unit1.appendChild(unit_top);
+                unit1.appendChild(unit_bottom);
+            }
+            else if (j == 1) {
+                unit2.appendChild(unit_top);
+                unit2.appendChild(unit_bottom);
+            }
+            else if (j == 2) {
+                unit3.appendChild(unit_top);
+                unit3.appendChild(unit_bottom);
+            }
+            else if (j == 3) {
+                unit4.appendChild(unit_top);
+                unit4.appendChild(unit_bottom);
+            }
         }
     }
     
+    row.appendChild(unit1);
+    row.appendChild(unit2);
+    row.appendChild(unit3);
+    row.appendChild(unit4);
+    
     document.body.appendChild(container_row);
 }
-
-
 
 } 
