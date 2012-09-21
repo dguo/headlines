@@ -73,6 +73,14 @@ def get_primary_image_link(url):
     
     return image_link
 
+def create_js():
+    
+    
+    
+    
+    
+    pass
+
 def main():
     
     # initialize the dictionary of sources with RSS URL, empty list of items, and the source's category
@@ -89,7 +97,7 @@ def main():
     sources['NPR'] = {'RSS': 'http://www.npr.org/rss/rss.php?id=1001', 'homepage': 'http://www.npr.org/', 'items': [], 'category': category}
     sources['Reuters'] = {'RSS': 'http://feeds.reuters.com/reuters/topNews?format=xml', 'homepage': 'http://www.reuters.com/', 'items': [], 'category': category}
     sources['The Huffington Post'] = {'RSS': 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews', 'homepage': 'http://www.huffingtonpost.com/', 'items': [], 'category': category}
-    sources['The New York Times'] = {'RSS': 'http://feeds.nytimes.com/nyt/rss/HomePage', 'homepage': 'http://www.nytimes.com/', 'items': [], 'category': category}
+    sources['The New York Times'] = {'RSS': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', 'homepage': 'http://www.nytimes.com/', 'items': [], 'category': category}
     sources['Time'] = {'RSS': 'http://feeds.feedburner.com/time/topstories?format=xml', 'homepage': 'http://www.time.com/time/', 'items': [], 'category': category}
     sources['USA Today'] = {'RSS': 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'homepage': 'http://www.usatoday.com/', 'items': [], 'category': category}
     sources['Yahoo! News'] = {'RSS': 'http://news.yahoo.com/rss/', 'homepage': 'http://news.yahoo.com/', 'items': [], 'category': category}
@@ -161,6 +169,9 @@ def main():
     
     # sync the list to the shelf
     sync_shelf(sources)
+    
+    # create the new javascript file
+    create_js()
 
 if __name__ == '__main__':
     main()
