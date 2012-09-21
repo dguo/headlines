@@ -52,6 +52,7 @@ def get_primary_image_link(url):
     params = {'token': os.environ['DIFFBOT_TOKEN'], 'format': 'json', 'url': url}
     image_link = ''
     
+    """
     try:
         r = requests.get(api_endpoint, params = params)
         info = json.loads(r.content)
@@ -68,6 +69,7 @@ def get_primary_image_link(url):
                     pass
     except:
         pass
+    """
     
     return image_link
 
@@ -151,7 +153,7 @@ def main():
         feed = parse_RSS(sources[source]['RSS'])
         if feed.entries:
             # add the five most recent entries for each source
-            for i in xrange(5):
+            for i in xrange(3):
                 if i < len(feed.entries):
                     title = feed.entries[i].title
                     link = feed.entries[i].link

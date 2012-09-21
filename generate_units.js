@@ -3,9 +3,9 @@ function generate_units()
 
 var sources = []
 
-sources[0] = ['NASA Picture of the Day', 'general', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[0] = ['NASA Picture of the Day', 'general', 'http://www.nasa.gov', 'Sunrise Analemma (with a little extra)', 'http://apod.nasa.gov/apod/astropix.html', 'test2 adsflkjasd alsdjfl;adf  a lkj', 'http://google.com', 'test3', 'http://wired.com']
 
-sources[1] = ['Cracked', 'business', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
+sources[1] = ['Cracked', 'random', 'http://www.cracked.com', 0, 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
 sources[2] = ['Discovery', 'science-and-health', 'http://www.google.com', 'Lorem Ipsum 2', 'http://www.google.com', 'Lorem Ipsum 3', 'http://www.google.com']
 
@@ -47,15 +47,32 @@ for (i = 0; i < number_of_rows; i++) {
             var unit_bottom = document.createElement("div");
             unit_bottom.className = sources[index][1] + "-bottom";
             
+            // put logo and link to home page in top part of unit
             var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";
             var source_logo_location = "logos/" + source_logo_name;
             var logo_tag = '<img src="' + source_logo_location + '" alt="' + sources[index][0] + '" style="padding:5px;"/>';
-            
             var name_tag = '<a href="' + sources[index][2] + '">' + sources[index][0] + '</a>';
-            
             unit_top.innerHTML = logo_tag + '<br>' + name_tag;
             
-            unit_bottom.innerHTML = sources[index][5];
+            
+            // put links or link+image into bottom part of unit
+            
+            var bottomHTML = "";
+            
+            //if (sources[index][3] == 1) {
+            //    bottomHTML = '<p><a href="' + sources[index][5] + '">' + sources[index][4] + '</a></p>';
+            //    bottomHTML = bottomHTML + '<br><br>' + '<img style="max-width: 70%; max-height: 70%" display: block; src="' + sources[index][6] + '" alt="' + sources[index][5] + '" class="center"/>';
+            //}
+            
+            
+            for (k = 3; k + 1 < sources[index].length; k = k + 2) {  
+                bottomHTML = bottomHTML + '<a href="' + sources[index][k+1] + '">' + sources[index][k] + '</a>';
+                if (k != sources[index].length - 2) {
+                    bottomHTML = bottomHTML + '<br><br>';
+                }
+            }
+            
+            unit_bottom.innerHTML = '<p>' + bottomHTML + '</p>';
             
             if (j == 0) {
                 unit1.appendChild(unit_top);

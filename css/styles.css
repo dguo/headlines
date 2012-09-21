@@ -6,10 +6,20 @@
 	font-family: Verdana, Arial, sans-serif;
 	}
         
+        p {
+        padding-left: 3px;
+        display: block;
+        padding-bottom: 3px;
+        }
+        
+        img {
+        margin-top: 4px;
+        }
+        
         a:link {text-decoration:none; color: inherit;}    /* unvisited link */
         a:visited {text-decoration:none; color: inherit;} /* visited link */
-        a:hover {text-decoration:none; font-weight:bold; color: inherit;}   /* mouse over link */
-        a:active {text-decoration:none; font-weight:bold; color: inherit;}  /* selected link */
+        a:hover {text-decoration:underline; color: inherit;}   /* mouse over link */
+        a:active {text-decoration:underline; color: inherit;}  /* selected link */
 	        
         .general-top {
         width: 100%;
