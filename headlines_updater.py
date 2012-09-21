@@ -75,11 +75,32 @@ def get_primary_image_link(url):
 
 def create_js():
     
+    shelf = shelve.open("items", writeback=False)
+
+    template = open('template.js')
     
+    js = open('generate_units.js', 'w+')
     
-    
-    
-    pass
+    for line in template:
+        if 'var sources = []' in line:
+            js.write(line)
+            index = 0
+            for source in shelf.keys():
+                new_line = 'sources['+ str(index) + '] = ["' + source + '", "' + shelf[source]['category'] + '", "' + shelf[source]['homepage'] + '"'
+                for shelf_item in shelf[source]['items']:
+                    title = shelf_item['title'].replace('"', '\\\"')
+                    link = shelf_item['link'].replace('"', '\\\"')
+                    new_line = new_line + ', "' + title + '", "' + link + '"'
+                new_line = new_line + '];\n'    
+                index += 1
+                js.write(new_line.encode('utf-8'))
+        else:
+            js.write(line)
+             
+    shelf.close()
+    template.close()
+    js.close()
+
 
 def main():
     
@@ -92,7 +113,7 @@ def main():
     sources['BBC News'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'homepage': 'http://www.bbc.co.uk/news/', 'items': [], 'category': category}
     sources['CBS News'] = {'RSS': 'http://feeds.cbsnews.com/CBSNewsMain', 'homepage': 'http://www.cbsnews.com/', 'items': [], 'category': category}
     sources['CNN'] = {'RSS': 'http://rss.cnn.com/rss/cnn_topstories.rss', 'homepage': 'http://www.cnn.com/', 'items': [], 'category': category}
-    sources['Fox News'] = {'RSS': 'http://feeds.foxnews.com/foxnews/latest?format=xml', 'homepage': 'http://www.foxnews.com/', 'items': [], 'catgory': category}
+    sources['Fox News'] = {'RSS': 'http://feeds.foxnews.com/foxnews/latest?format=xml', 'homepage': 'http://www.foxnews.com/', 'items': [], 'category': category}
     sources['NBC News'] = {'RSS': 'http://pheedo.msnbc.msn.com/id/3032091/device/rss', 'homepage': 'http://www.nbcnews.com/', 'items': [], 'category': category}
     sources['NPR'] = {'RSS': 'http://www.npr.org/rss/rss.php?id=1001', 'homepage': 'http://www.npr.org/', 'items': [], 'category': category}
     sources['Reuters'] = {'RSS': 'http://feeds.reuters.com/reuters/topNews?format=xml', 'homepage': 'http://www.reuters.com/', 'items': [], 'category': category}
@@ -126,7 +147,7 @@ def main():
     # daily
     category = 'daily'
     sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'homepage': 'http://www.amazon.com/', 'items': [], 'category': category}
-    sources['NASA Picture of the Day'] = {'RSS': 'http://www.nasa.gov/rss/image_of_the_day.rss', 'homepage': 'http://apod.nasa.gov/apod/', 'items': [], 'catgory': category}
+    sources['NASA Picture of the Day'] = {'RSS': 'http://www.nasa.gov/rss/image_of_the_day.rss', 'homepage': 'http://apod.nasa.gov/apod/', 'items': [], 'category': category}
     
     # entertainment
     category = 'entertainment'

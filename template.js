@@ -3,7 +3,40 @@ function generate_units()
 
 var sources = []
 
+/* randomly sort the sources */
 sources.sort(function() {return 0.5 - Math.random()} );
+
+/* guarantee that the fourth unit is Amazon */
+if (sources[3][0] != "Amazon.com") {
+    var Amazon_index = -1;
+    for (a = 0; a < sources.length; a++) {
+        if (sources[a][0] == "Amazon.com") {
+            Amazon_index = a;
+            break;
+        }
+    }
+    if (Amazon_index != -1) {
+        var temp = sources[3];
+        sources[3] = sources[Amazon_index];
+        sources[Amazon_index] = temp;
+    }
+}
+
+/* guarantee that the first unit is a general news source */
+if (sources[0][1] != "general") {
+    var general_index = -1;
+    for (b = 0; b < sources.length; b++) {
+        if (sources[b][1] == "general") {
+            general_index = b;
+            break;
+        }
+    }
+    if (general_index != -1) {
+        var temp = sources[0];
+        sources[0] = sources[general_index];
+        sources[general_index] = temp;
+    }
+}
 
 var number_of_rows = Math.ceil(sources.length / 4);
 
@@ -37,11 +70,10 @@ for (i = 0; i < number_of_rows; i++) {
             var unit_bottom = document.createElement("div");
             
             // checkerboard pattern for blue vs. red units
-            if (i % 2 == 0 && j % 2 == 0) {
+            if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
                 unit_top.className = "unit-even-top";
                 unit_bottom.className = "unit-even-bottom";
             }
-            
             else {
                 unit_top.className = "unit-odd-top";
                 unit_bottom.className = "unit-odd-bottom";
@@ -55,7 +87,7 @@ for (i = 0; i < number_of_rows; i++) {
             unit_top.innerHTML = logo_tag + '<br>' + name_tag;
             
             
-            // put links in bottom part of unit
+            // put links in list in bottom part of unit
             
             var bottomHTML = "<ul>";
             
