@@ -5,6 +5,8 @@ import json
 import urllib2
 from getimageinfo import getImageInfo
 import copy
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
 
 # take in RSS url, return the feed
 def parse_RSS(source):
@@ -101,6 +103,12 @@ def create_js():
     template.close()
     js.close()
 
+def push_to_S3():
+    conn = S3Connection(os.environ['AWS_ACCESS_KEY_ID'], os.environ['AWS_SECRET_ACCESS_KEY'])
+    bucket = conn.get_bucket('www.dailylore.com')
+    key = bucket.new_key('generate_units.js')
+    key.set_contents_from_filename('generate_units.js')
+    key.set_acl('public-read')
 
 def main():
     
@@ -193,6 +201,9 @@ def main():
     
     # create the new javascript file
     create_js()
+    
+    # push the new javascript file to S3
+    push_to_S3()
 
 if __name__ == '__main__':
     main()
