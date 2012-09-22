@@ -166,7 +166,7 @@ def main():
 
     # random
     category = 'random'
-    sources['Buzzfeed'] = {'RSS': 'http://www.buzzfeed.com/index.xml', 'homepage': 'http://www.buzzfeed.com/', 'items': [], 'category': category}
+    sources['BuzzFeed'] = {'RSS': 'http://www.buzzfeed.com/index.xml', 'homepage': 'http://www.buzzfeed.com/', 'items': [], 'category': category}
     sources['Cracked'] = {'RSS': 'http://feeds.feedburner.com/CrackedRSS', 'homepage': 'http://www.cracked.com/', 'items': [], 'category': category}
     sources['Reddit'] = {'RSS': 'http://www.reddit.com/r/all/top/.rss', 'homepage': 'http://www.reddit.com/', 'items': [], 'category': category}
     

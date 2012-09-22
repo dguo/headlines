@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
 
 <head>
     <meta charset="utf-8" />
@@ -19,22 +19,54 @@
     <!--css3-mediaqueries.js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
     <script type="text/javascript" src="js/css3-mediaqueries.js"></script>
     
-    <link rel="icon" href="icons/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon-precomposed" href="icons/appletouchicon.png" type="image/png" />
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon-precomposed" href="images/appletouchicon.png" type="image/png" />
     
     <meta name="description" content="Always shows the current headlines." />
     
     <meta name="keywords" content="news, aggregator, headlines, daily, lore, news aggregator" />
     
-    <script language="Javascript" src="generate_units.js"></script>    
+    <script language="Javascript" src="generate_units.js"></script>
+    
+    <meta property="og:title" content="The Daily Lore" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:url" content="http://www.dailylore.com" />
+    <meta property="og:image" content="" />
+    <meta property="og:site_name" content="The Daily Lore" />
+    <meta property="fb:app_id" content="3921478152554" />
+    
+    <!-- Google Analytics -->  
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35015156-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>    
         
 </head>
 
-<body background="texture.jpg" onload="generate_units()">
+<body background="images/texture.jpg" onload="generate_units()">
+    
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
     
 <div class="container header">
-    <center><img src="Daily_Lore_logo.png" alt="The Daily Lore" style="padding:10px;"/></center>
+    <center><img src="images/Daily_Lore_logo.png" alt="The Daily Lore" style="padding:10px;"/></center>
 </div> <!--/container-->
+
+<fb:like href="http://www.facebook.com/dailylore" send="false" width="450" show_faces="true" font="verdana"></fb:like>
 
 <hr style="margin-bottom: 25px;">
     
