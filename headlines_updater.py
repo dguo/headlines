@@ -181,7 +181,7 @@ def main():
     # science and health
     category = 'science-and-health'
     sources['Discovery'] = {'RSS': 'http://news.discovery.com/rss/news/', 'homepage': 'http://news.discovery.com/', 'items': [], 'category': category}
-    sources['HowStuffWorks'] = {'RSS': 'http://www.howstuffworks.com/news-rss.htm', 'homepage': 'http://www.howstuffworks.com/', 'items': [], 'category': category}
+    sources['HowStuffWorks'] = {'RSS': 'http://feeds.howstuffworks.com/DailyStuff?format=xml', 'homepage': 'http://www.howstuffworks.com/', 'items': [], 'category': category}
     sources['Popular Science'] = {'RSS': 'http://feeds.popsci.com/c/34567/f/632419/index.rss', 'homepage': 'http://www.popsci.com/', 'items': [], 'category': category}
     sources['WebMD'] = {'RSS': 'http://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC', 'homepage': 'http://www.webmd.com/', 'items': [], 'category': category}    
 
