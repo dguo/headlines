@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /Users/Danny/Desktop/Headlines
+cd /home/ec2-user/headlines
 python headlines_updater.py
