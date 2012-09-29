@@ -125,9 +125,7 @@ def main():
     sources['NBC News'] = {'RSS': 'http://pheedo.msnbc.msn.com/id/3032091/device/rss', 'homepage': 'http://www.nbcnews.com/', 'items': [], 'category': category}
     sources['NPR'] = {'RSS': 'http://www.npr.org/rss/rss.php?id=1001', 'homepage': 'http://www.npr.org/', 'items': [], 'category': category}
     sources['Reuters'] = {'RSS': 'http://feeds.reuters.com/reuters/topNews?format=xml', 'homepage': 'http://www.reuters.com/', 'items': [], 'category': category}
-    sources['The Huffington Post'] = {'RSS': 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews', 'homepage': 'http://www.huffingtonpost.com/', 'items': [], 'category': category}
     sources['The New York Times'] = {'RSS': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', 'homepage': 'http://www.nytimes.com/', 'items': [], 'category': category}
-    sources['Time'] = {'RSS': 'http://feeds.feedburner.com/time/topstories?format=xml', 'homepage': 'http://www.time.com/time/', 'items': [], 'category': category}
     sources['USA Today'] = {'RSS': 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'homepage': 'http://www.usatoday.com/', 'items': [], 'category': category}
     sources['Yahoo! News'] = {'RSS': 'http://news.yahoo.com/rss/', 'homepage': 'http://news.yahoo.com/', 'items': [], 'category': category}
     
@@ -155,21 +153,19 @@ def main():
     # daily
     category = 'daily'
     sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'homepage': 'http://www.amazon.com/', 'items': [], 'category': category}
-    sources['NASA Picture of the Day'] = {'RSS': 'http://www.nasa.gov/rss/image_of_the_day.rss', 'homepage': 'http://apod.nasa.gov/apod/', 'items': [], 'category': category}
     
     # entertainment
     category = 'entertainment'
     sources['E! Online'] = {'RSS': 'http://feeds.eonline.com/eonline/topstories?format=xml', 'homepage': 'http://www.eonline.com/', 'items': [], 'category': category}
     sources['People'] = {'RSS': 'http://feeds.people.com/people/headlines', 'homepage': 'http://www.people.com/people/', 'items': [], 'category': category}
     sources['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'homepage': 'http://www.rollingstone.com/', 'items': [], 'category': category}
-    sources['TMZ'] = {'RSS': 'http://www.tmz.com/rss.xml', 'homepage': 'http://www.tmz.com/', 'items': [], 'category': category}
-    sources['Gamespot'] = {'RSS': 'http://www.gamespot.com/rss/game_updates.php', 'homepage': 'http://www.gamespot.com/', 'items': [], 'category': category}
-    sources['IGN'] = {'RSS': 'http://feeds.ign.com/ign/news?format=xml', 'homepage': 'http://www.ign.com/', 'items': [], 'category': category}
+    sources['Entertainment Weekly'] = {'RSS': 'http://feeds.ew.com/entertainmentweekly/latest', 'homepage': 'http://www.ew.com/', 'items': [], 'category': category}
     
     # politics
     category = 'politics'
     sources['Politico'] = {'RSS': 'http://feeds.politico.com/politico/rss/politicopicks', 'homepage': 'http://www.politico.com/', 'items': [], 'category': category}
     sources['The Drudge Report'] = {'RSS': 'http://feeds.feedburner.com/DrudgeReportFeed', 'homepage': 'http://www.drudgereport.com/', 'items': [], 'category': category}
+    sources['The Huffington Post'] = {'RSS': 'http://feeds.huffingtonpost.com/huffingtonpost/LatestNews', 'homepage': 'http://www.huffingtonpost.com/', 'items': [], 'category': category}
     sources['The Washington Post'] = {'RSS': 'http://feeds.washingtonpost.com/rss/politics', 'homepage': 'http://www.washingtonpost.com/', 'items': [], 'category': category}
 
     # random
@@ -182,7 +178,7 @@ def main():
     # science and health
     category = 'science-and-health'
     sources['Discovery'] = {'RSS': 'http://news.discovery.com/rss/news/', 'homepage': 'http://news.discovery.com/', 'items': [], 'category': category}
-    sources['HowStuffWorks'] = {'RSS': 'http://feeds.howstuffworks.com/DailyStuff?format=xml', 'homepage': 'http://www.howstuffworks.com/', 'items': [], 'category': category}
+    sources['Science'] = {'RSS': 'http://news.sciencemag.org/rss/current.xml', 'homepage': 'http://news.sciencemag.org/', 'items': [], 'category': category}
     sources['Popular Science'] = {'RSS': 'http://feeds.popsci.com/c/34567/f/632419/index.rss', 'homepage': 'http://www.popsci.com/', 'items': [], 'category': category}
     sources['WebMD'] = {'RSS': 'http://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC', 'homepage': 'http://www.webmd.com/', 'items': [], 'category': category}    
 
