@@ -149,7 +149,7 @@ def main():
                     link = feed.entries[i].link
                     if 'amazon' in link:
                         link = link.replace('tag=rssfeeds-20', 'tag=thdalo00-20&linkCode=ur2')
-                    if 'Sponsored by:' not in title: 
+                    if 'ads.pheedo' not in link: 
                         sources[source]['items'].append({'title': title, 'link': link})
         pass
 
