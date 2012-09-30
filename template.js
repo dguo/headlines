@@ -112,4 +112,8 @@ for (i = 0; i < number_of_rows; i++) {
     document.body.appendChild(container_row);
 }
 
+var last_row = document.createElement("div");
+last_row.innerHTML = '<center><a href="about.html" alt="Attributions">Attributions</a></center>';
+document.body.appendChild(last_row);
+
 } 
