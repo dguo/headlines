@@ -71,7 +71,7 @@ for (i = 0; i < number_of_rows; i++) {
             var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";
             var source_logo_location = "logos/" + source_logo_name;
             var logo_tag = '<img src="' + source_logo_location + '" alt="' + sources[index][0] + '" style="padding:5px;"/>';
-            var gaq_call = 'onClick="' + "_gaq.push(['_trackEvent', 'Refer', '" + sources[index][0] + "', 'Home page']);" + '"';
+            var gaq_call = 'onClick="' + "_gaq.push(['_trackEvent', 'Refer', 'Home page', '" + sources[index][0] + "']);" + '"';
             var name_tag = '<a href="' + sources[index][2] + '" ' + gaq_call + '>' + sources[index][0] + '</a>';
             unit_top.innerHTML = logo_tag + '<br>' + name_tag;    
             
@@ -79,7 +79,7 @@ for (i = 0; i < number_of_rows; i++) {
             var bottomHTML = "<ul>";
                         
             for (k = 3; k + 1 < sources[index].length; k = k + 2) {
-                var gaq_call_2 = 'onClick="' + "_gaq.push(['_trackEvent', 'Refer', '" + sources[index][0] + "', 'Link']);" + '"';
+                var gaq_call_2 = 'onClick="' + "_gaq.push(['_trackEvent', 'Refer', 'Link', '" + sources[index][0] + "']);" + '"';
                 bottomHTML = bottomHTML + '<li><a href="' + sources[index][k+1] + '" ' + gaq_call_2 + '>' + sources[index][k] + '</li></a>';
             }
             
