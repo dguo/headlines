@@ -149,7 +149,8 @@ def main():
                     link = feed.entries[i].link
                     if 'amazon' in link:
                         link = link.replace('tag=rssfeeds-20', 'tag=thdalo00-20&linkCode=ur2')
-                    sources[source]['items'].append({'title': title, 'link': link})
+                    if 'Sponsored by:' not in title: 
+                        sources[source]['items'].append({'title': title, 'link': link})
         pass
 
     # sync the list to the shelf
