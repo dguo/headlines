@@ -3,7 +3,6 @@ import feedparser
 import requests
 import json
 import urllib2
-from getimageinfo import getImageInfo
 import copy
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
@@ -20,60 +19,17 @@ def sync_shelf(sources):
     # for new shelf, just copy everything over
     if len(shelf) == 0:
         for source in sources:
-            for item in sources[source]['items']:
-                item['image_link'] = get_primary_image_link(item['link'])
-        for source in sources:
             shelf[source] = copy.deepcopy(sources[source])
         shelf.sync()
         
     else:
         for source in sources:
-            # if there are no items in sources, copy them back from the shelf
-            if len(sources[source]['items']) == 0:
-                sources[source]['items'] = copy.deepcopy(shelf[source]['items'])
-            else:
-                for item in sources[source]['items']:
-                    copied = False
-                    for shelf_item in shelf[source]['items']:
-                        if item['title'] == shelf_item['title']:
-                            copied = True
-                            item['image_link'] = copy.deepcopy(shelf_item['image_link'])
-                    if not copied:
-                        item['image_link'] = get_primary_image_link(item['link'])
-        
-        for source in sources:
-            shelf[source] = copy.deepcopy(sources[source])
+            # as long as there are items in sources, copy them into the shelf
+            if len(sources[source]['items']) != 0:
+                shelf[source] = copy.deepcopy(sources[source])
         shelf.sync()
                         
     shelf.close()
-
-# take in url, return the link for a primary image, if any
-def get_primary_image_link(url):
-    
-    api_endpoint = 'http://www.diffbot.com/api/article'
-    params = {'token': os.environ['DIFFBOT_TOKEN'], 'format': 'json', 'url': url}
-    image_link = ''
-    
-    """
-    try:
-        r = requests.get(api_endpoint, params = params)
-        info = json.loads(r.content)
-        for content in info['media']:
-            if content['primary'] == 'true' and content['type'] == 'image':
-                # minimum acceptable image size
-                try:
-                    # 3-tuple of image type, width, and height
-                    picture_info = urllib2.urlopen(content['link']).read()
-                    if getImageInfo(picture_info)[1] > 200 and getImageInfo(picture_info)[2] > 200:
-                        image_link = content['link']
-                        break
-                except:
-                    pass
-    except:
-        pass
-    """
-    
-    return image_link
 
 def create_js():
     
@@ -119,7 +75,7 @@ def main():
     category = 'general'
     sources['ABC News'] = {'RSS': 'http://feeds.abcnews.com/abcnews/topstories', 'homepage': 'http://abcnews.go.com/', 'items': [], 'category': category}
     sources['BBC News'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'homepage': 'http://www.bbc.co.uk/news/', 'items': [], 'category': category}
-    sources['CBS News'] = {'RSS': 'http://feeds.cbsnews.com/CBSNewsMain', 'homepage': 'http://www.cbsnews.com/', 'items': [], 'category': category}
+    sources['CBS News'] = {'RSS': 'http://feeds.cbsnews.com/CBSNewsWorld?format=xml', 'homepage': 'http://www.cbsnews.com/', 'items': [], 'category': category}
     sources['CNN'] = {'RSS': 'http://rss.cnn.com/rss/cnn_topstories.rss', 'homepage': 'http://www.cnn.com/', 'items': [], 'category': category}
     sources['Fox News'] = {'RSS': 'http://feeds.foxnews.com/foxnews/latest?format=xml', 'homepage': 'http://www.foxnews.com/', 'items': [], 'category': category}
     sources['NBC News'] = {'RSS': 'http://pheedo.msnbc.msn.com/id/3032091/device/rss', 'homepage': 'http://www.nbcnews.com/', 'items': [], 'category': category}
@@ -176,7 +132,7 @@ def main():
     sources['Reddit'] = {'RSS': 'http://www.reddit.com/r/all/top/.rss', 'homepage': 'http://www.reddit.com/', 'items': [], 'category': category}
     
     # science and health
-    category = 'science-and-health'
+    category = 'science_and_health'
     sources['Discovery'] = {'RSS': 'http://news.discovery.com/rss/news/', 'homepage': 'http://news.discovery.com/', 'items': [], 'category': category}
     sources['Science'] = {'RSS': 'http://news.sciencemag.org/rss/current.xml', 'homepage': 'http://news.sciencemag.org/', 'items': [], 'category': category}
     sources['Popular Science'] = {'RSS': 'http://feeds.popsci.com/c/34567/f/632419/index.rss', 'homepage': 'http://www.popsci.com/', 'items': [], 'category': category}
@@ -186,13 +142,14 @@ def main():
     for source in sources:
         feed = parse_RSS(sources[source]['RSS'])
         if feed.entries:
-            # add the five most recent entries for each source
+            # add the three most recent entries for each source
             for i in xrange(3):
                 if i < len(feed.entries):
                     title = feed.entries[i].title
                     link = feed.entries[i].link
-                    sources[source]['items'].append({'title': title, 'link': link, 'image_link': ''})
-    
+                    sources[source]['items'].append({'title': title, 'link': link})
+        pass
+
     # sync the list to the shelf
     sync_shelf(sources)
     

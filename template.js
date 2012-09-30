@@ -69,15 +69,19 @@ for (i = 0; i < number_of_rows; i++) {
             var unit_top = document.createElement("div");
             var unit_bottom = document.createElement("div");
             
-            // checkerboard pattern for blue vs. red units
-            if ((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)) {
-                unit_top.className = "unit-even-top";
-                unit_bottom.className = "unit-even-bottom";
-            }
-            else {
-                unit_top.className = "unit-odd-top";
-                unit_bottom.className = "unit-odd-bottom";
-            }
+            unit_top.className = "unit-top";
+            unit_bottom.className = "unit-bottom";
+            
+            var category = sources[index][1];
+            if (category == "general") unit_bottom.className = unit_bottom.className + " white";
+            else if (category == "business") unit_bottom.className = unit_bottom.className + " green";
+            else if (category == "entertainment") unit_bottom.className = unit_bottom.className + " purple";
+            else if (category == "politics") unit_bottom.className = unit_bottom.className + " brown";
+            else if (category == "random") unit_bottom.className = unit_bottom.className + " black";
+            else if (category == "science_and_health") unit_bottom.className = unit_bottom.className + " blue";
+            else if (category == "sports") unit_bottom.className = unit_bottom.className + " red";
+            else if (category == "technology") unit_bottom.className = unit_bottom.className + " orange";
+            else if (category == "daily") unit_bottom.className = unit_bottom.className + " gold";
             
             // put logo and link to home page in top part of unit
             var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";
