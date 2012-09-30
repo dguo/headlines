@@ -71,24 +71,16 @@ for (i = 0; i < number_of_rows; i++) {
             var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";
             var source_logo_location = "logos/" + source_logo_name;
             var logo_tag = '<img src="' + source_logo_location + '" alt="' + sources[index][0] + '" style="padding:5px;"/>';
-            var name_tag = '<a href="' + sources[index][2] + '">' + sources[index][0] + '</a>';
-            unit_top.innerHTML = logo_tag + '<br>' + name_tag;
-            
+            var gaq_call = 'onClick="' + "_gaq.push(['_trackEvent', 'Refer', '" + sources[index][0] + "', 'Home page']);" + '"';
+            var name_tag = '<a href="' + sources[index][2] + '" ' + gaq_call + '>' + sources[index][0] + '</a>';
+            unit_top.innerHTML = logo_tag + '<br>' + name_tag;    
             
             // put links in list in bottom part of unit
-            
             var bottomHTML = "<ul>";
-            
-            //if (sources[index][3] == 1) {
-            //    bottomHTML = '<p><a href="' + sources[index][5] + '">' + sources[index][4] + '</a></p>';
-            //    bottomHTML = bottomHTML + '<br><br>' + '<img style="max-width: 70%; max-height: 70%" display: block; src="' + sources[index][6] + '" alt="' + sources[index][5] + '" class="center"/>';
-            //}
-            
-            for (k = 3; k + 1 < sources[index].length; k = k + 2) {  
-                bottomHTML = bottomHTML + '<li><a href="' + sources[index][k+1] + '">' + sources[index][k] + '</li></a>';
-                if (k != sources[index].length - 2) {
-                   // bottomHTML = bottomHTML + '<br><br>';
-                }
+                        
+            for (k = 3; k + 1 < sources[index].length; k = k + 2) {
+                var gaq_call_2 = 'onClick="' + "_gaq.push(['_trackEvent', 'Refer', '" + sources[index][0] + "', 'Link']);" + '"';
+                bottomHTML = bottomHTML + '<li><a href="' + sources[index][k+1] + '" ' + gaq_call_2 + '>' + sources[index][k] + '</li></a>';
             }
             
             unit_bottom.innerHTML = "<p>" + bottomHTML + "</ul></p>";

@@ -22,7 +22,7 @@
     <link rel="icon" href="images/favicon.png" type="image/png" />
     <link rel="apple-touch-icon-precomposed" href="images/appletouchicon.png" type="image/png" />
     
-    <meta name="description" content="Always shows the current headlines." />
+    <meta name="description" content="A snapshot of news headlines." />
     
     <meta name="keywords" content="news, aggregator, headlines, daily, lore, news aggregator" />
     
@@ -49,6 +49,7 @@
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     
+    <!-- implement smooth scroll -->
     <script type='text/javascript'>
     jQuery(document).ready(function($) {
 	$(".scroll").click(function(event){		
@@ -75,28 +76,28 @@
             <center>
                 <img src="category_icons/general.png" alt="General"/>
                 <br>
-                <a class="button medium white" href="#a.general"><span>General</span></a>
+                <a class="button medium white" href="#a.general" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'General']);"><span>General</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/business.png" alt="Business"/>
                 <br>
-                <a class="button medium green scroll" href="#business"><span>Business</span></a>
+                <a class="button medium green scroll" href="#business" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Business']);"><span>Business</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/entertainment.png" alt="Entertainment"/>
                 <br>
-                <a class="button medium purple scroll" href="#entertainment"><span>Entertainment</span></a>
+                <a class="button medium purple scroll" href="#entertainment" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Entertainment']);"><span>Entertainment</span></a>
             </center>
         </div>
         <div class="threecol last">
             <center>
                 <img src="category_icons/politics.png" alt="Politics"/>
                 <br>
-                <a class="button medium brown scroll" href="#politics"><span>Politics</span></a>
+                <a class="button medium brown scroll" href="#politics" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Politics']);"><span>Politics</span></a>
             </center>
         </div>
     </div>
@@ -108,28 +109,28 @@
             <center>
                 <img src="category_icons/random.png" alt="Random"/>
                 <br>
-                <a class="button medium black scroll" href="#random"><span>Random</span></a>
+                <a class="button medium black scroll" href="#random" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Random']);"><span>Random</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/science_and_health.png" alt="Science and Health"/>
                 <br>
-                <a class="button medium blue scroll" href="#science_and_health"><span>Science and Health</span></a>
+                <a class="button medium blue scroll" href="#science_and_health" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Science and Health']);"><span>Science and Health</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/sports.png" alt="Sports"/>
                 <br>
-                <a class="button medium red scroll" href="#sports"><span>Sports</span></a>
+                <a class="button medium red scroll" href="#sports" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Sports']);"><span>Sports</span></a>
             </center>
         </div>
         <div class="threecol last">
             <center>
                 <img src="category_icons/technology.png" alt="Technology"/>
                 <br>
-                <a class="button medium orange scroll" href="#technology"><span>Technology</span></a>
+                <a class="button medium orange scroll" href="#technology" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Technology']);"><span>Technology</span></a>
             </center>
         </div>
     </div>
