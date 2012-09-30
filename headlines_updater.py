@@ -108,7 +108,7 @@ def main():
     
     # daily
     category = 'daily'
-    sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'homepage': 'http://www.amazon.com/', 'items': [], 'category': category}
+    sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'homepage': 'http://www.amazon.com/?&linkCode=ur2&tag=thdalo00-20', 'items': [], 'category': category}
     
     # entertainment
     category = 'entertainment'
