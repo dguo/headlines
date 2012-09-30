@@ -72,7 +72,7 @@ def main():
     sources = {}
     
     # general
-    category = 'general'
+    category = 'a.general'
     sources['ABC News'] = {'RSS': 'http://feeds.abcnews.com/abcnews/topstories', 'homepage': 'http://abcnews.go.com/', 'items': [], 'category': category}
     sources['BBC News'] = {'RSS': 'http://feeds.bbci.co.uk/news/rss.xml', 'homepage': 'http://www.bbc.co.uk/news/', 'items': [], 'category': category}
     sources['CBS News'] = {'RSS': 'http://feeds.cbsnews.com/CBSNewsWorld?format=xml', 'homepage': 'http://www.cbsnews.com/', 'items': [], 'category': category}
@@ -107,7 +107,7 @@ def main():
     sources['The Wall Street Journal'] = {'RSS': 'http://online.wsj.com/xml/rss/3_7011.xml', 'homepage': 'http://online.wsj.com/home-page', 'items': [], 'category': category}
     
     # daily
-    category = 'daily'
+    category = 'z.daily'
     sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'homepage': 'http://www.amazon.com/?&linkCode=ur2&tag=thdalo00-20', 'items': [], 'category': category}
     
     # entertainment
@@ -147,6 +147,8 @@ def main():
                 if i < len(feed.entries):
                     title = feed.entries[i].title
                     link = feed.entries[i].link
+                    if 'amazon' in link:
+                        link = link.replace('tag=rssfeeds-20', 'tag=thdalo00-20&linkCode=ur2')
                     sources[source]['items'].append({'title': title, 'link': link})
         pass
 

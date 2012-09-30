@@ -6,39 +6,17 @@ var sources = []
 /* randomly sort the sources */
 sources.sort(function() {return 0.5 - Math.random()} );
 
-/* guarantee that the fourth unit is Amazon */
-if (sources[3][0] != "Amazon.com") {
-    var Amazon_index = -1;
-    for (a = 0; a < sources.length; a++) {
-        if (sources[a][0] == "Amazon.com") {
-            Amazon_index = a;
-            break;
-        }
-    }
-    if (Amazon_index != -1) {
-        var temp = sources[3];
-        sources[3] = sources[Amazon_index];
-        sources[Amazon_index] = temp;
-    }
-}
+/* now sort by category */
+sources.sort(function(a, b) { return (a[1] < b[1] ? -1 : (a[1] > b[1] ? 1 : 0)); });
 
-/* guarantee that the first unit is a general news source */
-if (sources[0][1] != "general") {
-    var general_index = -1;
-    for (b = 0; b < sources.length; b++) {
-        if (sources[b][1] == "general") {
-            general_index = b;
-            break;
-        }
-    }
-    if (general_index != -1) {
-        var temp = sources[0];
-        sources[0] = sources[general_index];
-        sources[general_index] = temp;
-    }
-}
+/* splice in Amazon */
+var Amazon = sources[sources.length - 1]
+sources.splice(sources.length - 1, 1);
+sources.splice(3, 0, Amazon);
 
 var number_of_rows = Math.ceil(sources.length / 4);
+
+var currentCategory = "null";
 
 for (i = 0; i < number_of_rows; i++) {
     
@@ -66,6 +44,12 @@ for (i = 0; i < number_of_rows; i++) {
         var index = (i * 4) + j;
         if (index < sources.length) {
             
+            /* set id attributes for first row of each category, excluding Amazon.com */
+            if (sources[index][1] != currentCategory && sources[index][0] != "Amazon.com") {
+                container_row.id = sources[index][1];
+                currentCategory = sources[index][1];
+            }
+            
             var unit_top = document.createElement("div");
             var unit_bottom = document.createElement("div");
             
@@ -73,7 +57,7 @@ for (i = 0; i < number_of_rows; i++) {
             unit_bottom.className = "unit-bottom";
             
             var category = sources[index][1];
-            if (category == "general") unit_bottom.className = unit_bottom.className + " white";
+            if (category == "a.general") unit_bottom.className = unit_bottom.className + " white";
             else if (category == "business") unit_bottom.className = unit_bottom.className + " green";
             else if (category == "entertainment") unit_bottom.className = unit_bottom.className + " purple";
             else if (category == "politics") unit_bottom.className = unit_bottom.className + " brown";
@@ -81,7 +65,7 @@ for (i = 0; i < number_of_rows; i++) {
             else if (category == "science_and_health") unit_bottom.className = unit_bottom.className + " blue";
             else if (category == "sports") unit_bottom.className = unit_bottom.className + " red";
             else if (category == "technology") unit_bottom.className = unit_bottom.className + " orange";
-            else if (category == "daily") unit_bottom.className = unit_bottom.className + " gold";
+            else if (category == "z.daily") unit_bottom.className = unit_bottom.className + " gold";
             
             // put logo and link to home page in top part of unit
             var source_logo_name = sources[index][0].replace(/ /g, "_") + ".png";

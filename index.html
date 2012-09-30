@@ -45,7 +45,18 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-    </script>    
+    </script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    
+    <script type='text/javascript'>
+    jQuery(document).ready(function($) {
+	$(".scroll").click(function(event){		
+		event.preventDefault();
+		$('html,body').animate({scrollTop:$(this.hash).offset().top}, 750);
+	});
+    });
+    </script>
         
 </head>
 
@@ -64,28 +75,28 @@
             <center>
                 <img src="category_icons/general.png" alt="General"/>
                 <br>
-                <a class="button medium white" href="#"><span>General</span></a>
+                <a class="button medium white" href="#a.general"><span>General</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/business.png" alt="Business"/>
                 <br>
-                <a class="button medium green" href="#"><span>Business</span></a>
+                <a class="button medium green scroll" href="#business"><span>Business</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/entertainment.png" alt="Entertainment"/>
                 <br>
-                <a class="button medium purple" href="#"><span>Entertainment</span></a>
+                <a class="button medium purple scroll" href="#entertainment"><span>Entertainment</span></a>
             </center>
         </div>
         <div class="threecol last">
             <center>
                 <img src="category_icons/politics.png" alt="Politics"/>
                 <br>
-                <a class="button medium brown" href="#"><span>Politics</span></a>
+                <a class="button medium brown scroll" href="#politics"><span>Politics</span></a>
             </center>
         </div>
     </div>
@@ -97,28 +108,28 @@
             <center>
                 <img src="category_icons/random.png" alt="Random"/>
                 <br>
-                <a class="button medium black" href="#"><span>Random</span></a>
+                <a class="button medium black scroll" href="#random"><span>Random</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/science_and_health.png" alt="Science and Health"/>
                 <br>
-                <a class="button medium blue" href="#"><span>Science and Health</span></a>
+                <a class="button medium blue scroll" href="#science_and_health"><span>Science and Health</span></a>
             </center>
         </div>
         <div class="threecol">
             <center>
                 <img src="category_icons/sports.png" alt="Sports"/>
                 <br>
-                <a class="button medium red" href="#"><span>Sports</span></a>
+                <a class="button medium red scroll" href="#sports"><span>Sports</span></a>
             </center>
         </div>
         <div class="threecol last">
             <center>
                 <img src="category_icons/technology.png" alt="Technology"/>
                 <br>
-                <a class="button medium orange" href="#"><span>Technology</span></a>
+                <a class="button medium orange scroll" href="#technology"><span>Technology</span></a>
             </center>
         </div>
     </div>
