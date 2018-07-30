@@ -1,3 +1,4 @@
+import os
 import shelve
 import feedparser
 import requests
@@ -14,9 +15,9 @@ def parse_RSS(source):
 
 # take in the sources dictionary and sync to the shelf
 def sync_shelf(sources):
-    
+
     shelf = shelve.open("items", writeback=True)
-    
+
     # for new shelf, just copy everything over
     if len(shelf) == 0:
         '''
@@ -27,7 +28,7 @@ def sync_shelf(sources):
         for source in sources:
             shelf[source] = copy.deepcopy(sources[source])
         shelf.sync()
-        
+
     else:
         for source in sources:
             # if there are no items in sources, copy them back from the shelf
@@ -47,16 +48,16 @@ def sync_shelf(sources):
         for source in sources:
             shelf[source] = copy.deepcopy(sources[source])
         shelf.sync()
-                        
+
     shelf.close()
 
 # take in url, return the link for a primary image, if any
 def get_primary_image_link(url):
-    
+
     api_endpoint = 'http://www.diffbot.com/api/article'
     params = {'token': os.environ['DIFFBOT_TOKEN'], 'format': 'json', 'url': url}
     image_link = ''
-    
+
     """
     try:
         r = requests.get(api_endpoint, params = params)
@@ -75,17 +76,17 @@ def get_primary_image_link(url):
     except:
         pass
     """
-    
+
     return image_link
 
 def create_js():
-    
+
     shelf = shelve.open("items", writeback=False)
 
     template = open('template.js')
-    
+
     js = open('generate_units.js', 'w+')
-    
+
     for line in template:
         if 'var sources = []' in line:
             js.write(line)
@@ -96,12 +97,12 @@ def create_js():
                     title = shelf_item['title'].replace('"', '\\\"')
                     link = shelf_item['link'].replace('"', '\\\"')
                     new_line = new_line + ', "' + title + '", "' + link + '"'
-                new_line = new_line + '];\n'    
+                new_line = new_line + '];\n'
                 index += 1
                 js.write(new_line.encode('utf-8'))
         else:
             js.write(line)
-             
+
     shelf.close()
     template.close()
     js.close()
@@ -114,10 +115,10 @@ def push_to_S3():
     key.set_acl('public-read')
 
 def main():
-    
+
     # initialize the dictionary of sources with RSS URL, empty list of items, and the source's category
     sources = {}
-    
+
     # general
     category = 'general'
     sources['ABC News'] = {'RSS': 'http://feeds.abcnews.com/abcnews/topstories', 'homepage': 'http://abcnews.go.com/', 'items': [], 'category': category}
@@ -131,39 +132,39 @@ def main():
     sources['The New York Times'] = {'RSS': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', 'homepage': 'http://www.nytimes.com/', 'items': [], 'category': category}
     sources['USA Today'] = {'RSS': 'http://rssfeeds.usatoday.com/usatoday-NewsTopStories', 'homepage': 'http://www.usatoday.com/', 'items': [], 'category': category}
     sources['Yahoo! News'] = {'RSS': 'http://news.yahoo.com/rss/', 'homepage': 'http://news.yahoo.com/', 'items': [], 'category': category}
-    
+
     # sports
     category = 'sports'
     sources['Bleacher Report'] = {'RSS': 'http://bleacherreport.com/articles/feed', 'homepage': 'http://bleacherreport.com/', 'items': [], 'category': category}
     sources['ESPN'] = {'RSS': 'http://sports.espn.go.com/espn/rss/news', 'homepage': 'http://espn.go.com/', 'items': [], 'category': category}
     sources['SB Nation'] = {'RSS': 'http://feeds.sbnation.com/rss/current?format=xml', 'homepage': 'http://www.sbnation.com/', 'items': [], 'category': category}
     sources['Sports Illustrated'] = {'RSS': 'http://rss.cnn.com/rss/si_topstories.rss', 'homepage': 'http://sportsillustrated.cnn.com/', 'items': [], 'category': category}
-    
+
     # technology
     category = 'technology'
     sources['Ars Technica'] = {'RSS': 'http://feeds.arstechnica.com/arstechnica/index?format=xml', 'homepage': 'http://arstechnica.com/', 'items': [], 'category': category}
     sources['Mashable'] = {'RSS': 'http://feeds.mashable.com/Mashable?format=xml', 'homepage': 'http://mashable.com/', 'items': [], 'category': category}
     sources['TechCrunch'] = {'RSS': 'http://feeds.feedburner.com/TechCrunch/', 'homepage': 'http://techcrunch.com/', 'items': [], 'category': category}
     sources['Wired'] = {'RSS': 'http://feeds.wired.com/wired/index?format=xml', 'homepage': 'http://www.wired.com/', 'items': [], 'category': category}
-    
+
     # business
     category = 'business'
     sources['Business Insider'] = {'RSS': 'http://feeds.feedburner.com/businessinsider?format=xml', 'homepage': 'http://www.businessinsider.com/', 'items': [], 'category': category}
     sources['CNBC'] = {'RSS': 'http://www.cnbc.com/id/19789731/device/rss/rss.xml', 'homepage': 'http://www.cnbc.com/', 'items': [], 'category': category}
     sources['Forbes'] = {'RSS': 'http://www.forbes.com/real-time/feed/', 'homepage': 'http://www.forbes.com/', 'items': [], 'category': category}
     sources['The Wall Street Journal'] = {'RSS': 'http://online.wsj.com/xml/rss/3_7011.xml', 'homepage': 'http://online.wsj.com/home-page', 'items': [], 'category': category}
-    
+
     # daily
     category = 'daily'
     sources['Amazon.com'] = {'RSS': 'http://rssfeeds.s3.amazonaws.com/goldbox', 'homepage': 'http://www.amazon.com/', 'items': [], 'category': category}
-    
+
     # entertainment
     category = 'entertainment'
     sources['E! Online'] = {'RSS': 'http://feeds.eonline.com/eonline/topstories?format=xml', 'homepage': 'http://www.eonline.com/', 'items': [], 'category': category}
     sources['People'] = {'RSS': 'http://feeds.people.com/people/headlines', 'homepage': 'http://www.people.com/people/', 'items': [], 'category': category}
     sources['Rolling Stone'] = {'RSS': 'http://www.rollingstone.com/siteServices/rss/allNews', 'homepage': 'http://www.rollingstone.com/', 'items': [], 'category': category}
     sources['Entertainment Weekly'] = {'RSS': 'http://feeds.ew.com/entertainmentweekly/latest', 'homepage': 'http://www.ew.com/', 'items': [], 'category': category}
-    
+
     # politics
     category = 'politics'
     sources['Politico'] = {'RSS': 'http://feeds.politico.com/politico/rss/politicopicks', 'homepage': 'http://www.politico.com/', 'items': [], 'category': category}
@@ -177,13 +178,13 @@ def main():
     sources['Cracked'] = {'RSS': 'http://feeds.feedburner.com/CrackedRSS', 'homepage': 'http://www.cracked.com/', 'items': [], 'category': category}
     sources['Lifehacker'] = {'RSS': 'http://feeds.gawker.com/lifehacker/full', 'homepage': 'http://lifehacker.com/', 'items': [], 'category': category}
     sources['Reddit'] = {'RSS': 'http://www.reddit.com/r/all/top/.rss', 'homepage': 'http://www.reddit.com/', 'items': [], 'category': category}
-    
+
     # science and health
     category = 'science_and_health'
     sources['Discovery'] = {'RSS': 'http://news.discovery.com/rss/news/', 'homepage': 'http://news.discovery.com/', 'items': [], 'category': category}
     sources['Science'] = {'RSS': 'http://news.sciencemag.org/rss/current.xml', 'homepage': 'http://news.sciencemag.org/', 'items': [], 'category': category}
     sources['Popular Science'] = {'RSS': 'http://feeds.popsci.com/c/34567/f/632419/index.rss', 'homepage': 'http://www.popsci.com/', 'items': [], 'category': category}
-    sources['WebMD'] = {'RSS': 'http://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC', 'homepage': 'http://www.webmd.com/', 'items': [], 'category': category}    
+    sources['WebMD'] = {'RSS': 'http://rssfeeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC', 'homepage': 'http://www.webmd.com/', 'items': [], 'category': category}
 
     # for each news source, get the feed
     for source in sources:
@@ -198,10 +199,10 @@ def main():
 
     # sync the list to the shelf
     sync_shelf(sources)
-    
+
     # create the new javascript file
     create_js()
-    
+
     # push the new javascript file to S3
     push_to_S3()
 
